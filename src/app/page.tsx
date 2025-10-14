@@ -15,19 +15,21 @@ export default function Home() {
   usePageAnimations();
 
   return (
-    <div className="container">
-      <Header />
+    <div>
+      <div className="container">
+        <Header />
 
-      <main className="main-content">
-        <HeroSection />
-        <FeaturesSection />
-        <HowItWorksSection />
-        <FitnessTypesSection />
-        <ExclusiveBenefitsSection />
-      </main>
+        <main className="main-content">
+          <HeroSection />
+          <FeaturesSection />
+          <HowItWorksSection />
+          <FitnessTypesSection />
+          <ExclusiveBenefitsSection />
+        </main>
 
+        <BackgroundDecoration />
+      </div>
       <Footer />
-      <BackgroundDecoration />
     </div>
   );
 }

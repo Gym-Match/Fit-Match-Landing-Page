@@ -1,4 +1,5 @@
 import Image from "next/image";
+import "../styles/FeaturesSection.css";
 
 export default function FeaturesSection() {
   return (
