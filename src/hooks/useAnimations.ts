@@ -4,10 +4,10 @@ import { useEffect } from "react";
 
 export function useScrollAnimations() {
   useEffect(() => {
-    // Configurar animações de scroll
+    // Configurar animações de scroll com opções mais suaves
     const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px",
+      threshold: 0.15,
+      rootMargin: "0px 0px -80px 0px",
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -28,7 +28,7 @@ export function useScrollAnimations() {
       observer.observe(section);
     });
 
-    // Observador específico para títulos de seção
+    // Observador específico para títulos de seção com animação mais suave
     const titleObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -37,7 +37,7 @@ export function useScrollAnimations() {
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.3, rootMargin: "0px 0px -50px 0px" }
     );
 
     // Observar todos os títulos de seção
@@ -46,7 +46,7 @@ export function useScrollAnimations() {
       titleObserver.observe(title);
     });
 
-    // Animação específica para os cards em sequência
+    // Animação específica para os cards em sequência (stagger effect)
     const cardObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -56,7 +56,7 @@ export function useScrollAnimations() {
           cards.forEach((card, index) => {
             setTimeout(() => {
               card.classList.add("animate-in");
-            }, index * 150);
+            }, index * 100); // Reduzido para 100ms para animação mais rápida
           });
         }
       });
@@ -68,11 +68,39 @@ export function useScrollAnimations() {
     );
     cardSections.forEach((section) => cardObserver.observe(section));
 
+    // Animação inicial do hero com delay suave
+    setTimeout(() => {
+      const heroElements = document.querySelectorAll(
+        ".hero-title, .hero-subtitle, .hero-features, .form-card"
+      );
+      heroElements.forEach((element, index) => {
+        setTimeout(() => {
+          element.classList.add("hero-animate-in");
+        }, index * 150);
+      });
+    }, 100); // Pequeno delay inicial para evitar flash
+
+    // Animação para badges e elementos especiais
+    const badgeObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("scale-in-element", "visible");
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    const badges = document.querySelectorAll(".badge, .premium-badge");
+    badges.forEach((badge) => badgeObserver.observe(badge));
+
     // Cleanup
     return () => {
       observer.disconnect();
       titleObserver.disconnect();
       cardObserver.disconnect();
+      badgeObserver.disconnect();
     };
   }, []);
 }
@@ -89,33 +117,41 @@ export function useFloatingHearts() {
         bottom: -20px;
         z-index: 0;
         pointer-events: none;
-        animation: float-up 4s linear forwards;
-        opacity: 0.7;
+        animation: float-up 5s ease-out forwards;
+        opacity: 0.6;
       `;
 
       document.body.appendChild(heart);
 
-      setTimeout(() => heart.remove(), 4000);
+      setTimeout(() => heart.remove(), 5000);
     };
 
-    // Adicionar CSS para animação dos corações
+    // Adicionar CSS para animação dos corações com curva mais suave
     const heartStyle = document.createElement("style");
     heartStyle.textContent = `
       @keyframes float-up {
         0% {
-          transform: translateY(0) rotate(0deg);
-          opacity: 0.7;
+          transform: translateY(0) translateX(0) rotate(0deg);
+          opacity: 0.6;
+        }
+        50% {
+          transform: translateY(-50vh) translateX(${
+            Math.random() * 40 - 20
+          }px) rotate(180deg);
+          opacity: 0.4;
         }
         100% {
-          transform: translateY(-100vh) rotate(360deg);
+          transform: translateY(-100vh) translateX(${
+            Math.random() * 60 - 30
+          }px) rotate(360deg);
           opacity: 0;
         }
       }
     `;
     document.head.appendChild(heartStyle);
 
-    // Floating hearts animation
-    const interval = setInterval(createFloatingHeart, 3000);
+    // Floating hearts animation com intervalo maior para não sobrecarregar
+    const interval = setInterval(createFloatingHeart, 4000);
 
     return () => {
       clearInterval(interval);
@@ -124,7 +160,42 @@ export function useFloatingHearts() {
   }, []);
 }
 
+// Hook para animações de parallax suaves
+export function useParallaxEffect() {
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY;
+      const parallaxElements = document.querySelectorAll(".gradient-orb");
+
+      parallaxElements.forEach((element, index) => {
+        const speed = 0.3 + index * 0.1; // Velocidades diferentes para cada orb
+        const yPos = -(scrolled * speed);
+        (element as HTMLElement).style.transform = `translateY(${yPos}px)`;
+      });
+    };
+
+    // Throttle para melhor performance
+    let ticking = false;
+    const scrollHandler = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", scrollHandler, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", scrollHandler);
+    };
+  }, []);
+}
+
 export function usePageAnimations() {
   useScrollAnimations();
   useFloatingHearts();
+  useParallaxEffect();
 }
