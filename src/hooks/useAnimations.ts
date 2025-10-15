@@ -71,7 +71,7 @@ export function useScrollAnimations() {
     // Animação inicial do hero com delay suave
     setTimeout(() => {
       const heroElements = document.querySelectorAll(
-        ".hero-title, .hero-subtitle, .hero-features, .form-card"
+        ".hero-title, .hero-subtitle, .hero-features, .app-store-section, .form-card"
       );
       heroElements.forEach((element, index) => {
         setTimeout(() => {

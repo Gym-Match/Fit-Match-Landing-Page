@@ -2,6 +2,7 @@
 
 import { Flame, MapPin, Target, Clock } from "lucide-react";
 import PreRegisterForm from "./PreRegisterForm";
+import AppStoreBadges from "./AppStoreBadges";
 
 export default function HeroSection() {
   return (
@@ -41,6 +42,8 @@ export default function HeroSection() {
               <span>Sincronize horários de treino</span>
             </div>
           </div>
+
+          <AppStoreBadges />
         </div>
 
         {/* Lado direito: Formulário */}

@@ -157,6 +157,80 @@ body {
   color: var(--text-primary);
 }
 
+/* App Store Badges */
+.app-store-section {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.app-store-text {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-align: left;
+}
+
+.store-badges {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.store-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.store-badge:hover {
+  background: rgba(124, 58, 237, 0.1);
+  border-color: var(--primary-purple);
+  transform: translateY(-2px);
+}
+
+.store-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--text-primary);
+}
+
+.store-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.store-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.store-name {
+  font-size: 1rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.apple-badge:hover {
+  border-color: var(--primary-purple);
+}
+
+.google-badge:hover {
+  border-color: var(--primary-green);
+}
+
 /* Badge */
 .badge {
   display: inline-flex;
@@ -805,41 +879,13 @@ body {
 
 .footer-bottom {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.footer-apps p {
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 15px;
-}
-
-.app-badges {
-  display: flex;
-  gap: 15px;
-}
-
-.app-badge {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 10px 15px;
-  border-radius: 8px;
-  color: white;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-}
-
-.app-badge:hover {
-  background: rgba(124, 58, 237, 0.3);
-  transform: translateY(-2px);
+  padding-top: 20px;
 }
 
 .footer-legal {
-  text-align: right;
+  text-align: center;
 }
 
 .footer-legal p {
@@ -1064,6 +1110,7 @@ body {
 .hero-title,
 .hero-subtitle,
 .hero-features,
+.app-store-section,
 .form-card {
   opacity: 0;
 }
@@ -1168,6 +1215,14 @@ a,
   .benefits-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+
+  .store-badges {
+    flex-direction: column;
+  }
+
+  .store-badge {
+    width: 100%;
   }
 }
 
