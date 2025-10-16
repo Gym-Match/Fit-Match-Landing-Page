@@ -485,7 +485,7 @@ body {
 
 /* Features Section */
 .features-section {
-  padding: 80px 0;
+  padding: 50px 0;
 }
 
 .main-section-title {
@@ -493,7 +493,7 @@ body {
   font-weight: 700;
   color: var(--text-primary);
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
   line-height: 1.2;
 }
 
@@ -1188,7 +1188,7 @@ a,
 
   /* Reduzir ainda mais o espaçamento da primeira seção após o hero */
   .features-section {
-    padding: 1.5rem 0 2.5rem 0;
+    padding: 1rem 0 2.5rem 0;
   }
 
   /* Reduzir espaçamento da hero section para que as próximas seções apareçam mais cedo */
@@ -1283,6 +1283,12 @@ a,
     gap: 40px;
   }
 
+  /* Reduzir margin do título principal no mobile */
+  .main-section-title {
+    margin-bottom: 30px;
+    font-size: 2rem;
+  }
+
   .footer-main {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -1355,7 +1361,7 @@ a,
 
   /* Primeira seção ainda mais próxima do hero em telas pequenas */
   .features-section {
-    padding: 1rem 0 2rem 0;
+    padding: 0.5rem 0 2rem 0;
   }
 
   /* Hero section mais compacta */
@@ -1380,6 +1386,12 @@ a,
 
   .features-grid {
     gap: 30px;
+  }
+
+  /* Título ainda menor em telas pequenas */
+  .main-section-title {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
   }
 
   /* Espaçamento ainda menor para how-it-works */

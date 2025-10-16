@@ -6,8 +6,8 @@ export function useScrollAnimations() {
   useEffect(() => {
     // Configurar animações de scroll com opções mais suaves
     const observerOptions = {
-      threshold: 0.15,
-      rootMargin: "0px 0px -80px 0px",
+      threshold: 0.05,
+      rootMargin: "0px 0px -20px 0px",
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -28,6 +28,27 @@ export function useScrollAnimations() {
       observer.observe(section);
     });
 
+    // Observador específico para a features section com configuração mais agressiva
+    const featuresObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate-in");
+          }
+        });
+      },
+      {
+        threshold: 0.01,
+        rootMargin: "0px 0px 0px 0px",
+      }
+    );
+
+    const featuresSection = document.querySelector(".features-section");
+    if (featuresSection) {
+      featuresSection.classList.add("scroll-animate");
+      featuresObserver.observe(featuresSection);
+    }
+
     // Observador específico para títulos de seção com animação mais suave
     const titleObserver = new IntersectionObserver(
       (entries) => {
@@ -37,7 +58,7 @@ export function useScrollAnimations() {
           }
         });
       },
-      { threshold: 0.3, rootMargin: "0px 0px -50px 0px" }
+      { threshold: 0.1, rootMargin: "0px 0px -20px 0px" }
     );
 
     // Observar todos os títulos de seção
@@ -101,6 +122,7 @@ export function useScrollAnimations() {
       titleObserver.disconnect();
       cardObserver.disconnect();
       badgeObserver.disconnect();
+      featuresObserver.disconnect();
     };
   }, []);
 }
