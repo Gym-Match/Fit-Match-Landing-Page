@@ -9,13 +9,11 @@ interface UserData {
   fullName: string;
   email: string;
   registeredAt: string;
-  premiumCode: string;
 }
 
 interface UsePreRegisterReturn {
   isLoading: boolean;
   showSuccess: boolean;
-  premiumCode: string;
   registeredUsers: UserData[];
   remainingSlots: number;
   submitForm: (fullName: string, email: string) => Promise<void>;
@@ -23,15 +21,6 @@ interface UsePreRegisterReturn {
 }
 
 const MAX_PREMIUM_USERS = 1000;
-
-const generatePremiumCode = () => {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let code = "PREMIUM";
-  for (let i = 0; i < 4; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return code;
-};
 
 const isValidEmail = (email: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -50,10 +39,8 @@ const hasFullName = (name: string) => {
 export function usePreRegister(): UsePreRegisterReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [premiumCode, setPremiumCode] = useState("");
   const [registeredUsers, setRegisteredUsers] = useState<UserData[]>([]);
 
-  // Carregar usuários do localStorage quando o componente montar
   useEffect(() => {
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem("fitMatchUsers");
@@ -70,7 +57,6 @@ export function usePreRegister(): UsePreRegisterReturn {
   };
 
   const submitForm = async (fullName: string, email: string) => {
-    // Validações
     if (!fullName || fullName.length < 2) {
       throw new Error("Por favor, digite um nome válido.");
     }
@@ -96,23 +82,19 @@ export function usePreRegister(): UsePreRegisterReturn {
     setIsLoading(true);
 
     try {
-      // Preparar dados para a API
       const apiData: CreateUserRequest = {
         name: fullName,
         email: email,
       };
 
-      // Chamada para a API
       await createUser(apiData);
 
       const userData: UserData = {
         fullName,
         email,
         registeredAt: new Date().toISOString(),
-        premiumCode: generatePremiumCode(),
       };
 
-      // Salvar dados localmente para controle do frontend
       const updatedUsers = [...registeredUsers, userData];
       setRegisteredUsers(updatedUsers);
 
@@ -120,11 +102,8 @@ export function usePreRegister(): UsePreRegisterReturn {
         localStorage.setItem("fitMatchUsers", JSON.stringify(updatedUsers));
       }
 
-      // Mostrar sucesso
-      setPremiumCode(userData.premiumCode);
       setShowSuccess(true);
 
-      // Auto-fechar após 10 segundos
       setTimeout(() => {
         setShowSuccess(false);
       }, 10000);
@@ -133,9 +112,7 @@ export function usePreRegister(): UsePreRegisterReturn {
 
       const apiError = error as ApiError;
 
-      // Tratar diferentes tipos de erro
       if (apiError.status === 400) {
-        // Email já cadastrado ou dados inválidos
         if (apiError.message.toLowerCase().includes("email")) {
           throw new Error("Este e-mail já garantiu o Premium gratuito! 🎉");
         } else {
@@ -144,7 +121,6 @@ export function usePreRegister(): UsePreRegisterReturn {
           );
         }
       } else if (apiError.status === 0) {
-        // Erro de conexão
         throw new Error(apiError.message);
       } else if (apiError.status >= 500) {
         throw new Error(
@@ -169,7 +145,6 @@ export function usePreRegister(): UsePreRegisterReturn {
   return {
     isLoading,
     showSuccess,
-    premiumCode,
     registeredUsers,
     remainingSlots,
     submitForm,

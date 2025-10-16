@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://fitmatch.com.br/sitemap.xml
+
+# Crawler delay
+Crawl-delay: 1

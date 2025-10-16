@@ -4,7 +4,7 @@ import { Crown, Gift, CheckCircle, PartyPopper } from "lucide-react";
 import { usePreRegister } from "../hooks/usePreRegister";
 
 export default function PreRegisterForm() {
-  const { isLoading, showSuccess, premiumCode, remainingSlots, submitForm } =
+  const { isLoading, showSuccess, remainingSlots, submitForm } =
     usePreRegister();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -108,7 +108,7 @@ export default function PreRegisterForm() {
 
             <p className="disclaimer">
               {remainingSlots > 0
-                ? `* Restam apenas ${remainingSlots} vagas para o Premium gratuito!`
+                ? `* Limitado a apenas ${remainingSlots} vagas para o Premium gratuito!`
                 : "* Promoção encerrada - todas as vagas foram preenchidas!"}
             </p>
           </form>
@@ -118,8 +118,8 @@ export default function PreRegisterForm() {
           <PartyPopper className="success-icon" size={48} />
           <h4>Parabéns! Você garantiu seu Premium!</h4>
           <p>
-            Seu primeiro mês será 100% gratuito! Você receberá um e-mail com seu
-            código promocional quando o app for lançado.
+            Seu primeiro mês será 100% gratuito! Você receberá um e-mail com
+            todas as informações quando o app for lançado.
           </p>
         </div>
       )}

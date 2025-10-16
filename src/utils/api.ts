@@ -18,10 +18,8 @@ export interface ApiError {
   errors?: Record<string, string[]>;
 }
 
-// Configuração base da API
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
-// Função para criar usuário
 export async function createUser(
   userData: CreateUserRequest
 ): Promise<CreateUserResponse> {
@@ -47,7 +45,6 @@ export async function createUser(
 
     return data;
   } catch (error) {
-    // Se for um erro de rede ou parsing
     if (error instanceof TypeError) {
       throw {
         message: "Erro de conexão. Verifique sua internet e tente novamente.",
@@ -55,12 +52,10 @@ export async function createUser(
       } as ApiError;
     }
 
-    // Re-throw API errors
     throw error;
   }
 }
 
-// Função para verificar se o email já existe (opcional)
 export async function checkEmailExists(email: string): Promise<boolean> {
   try {
     const response = await fetch(`${API_BASE_URL}/api/users/check-email`, {
@@ -72,17 +67,16 @@ export async function checkEmailExists(email: string): Promise<boolean> {
     });
 
     if (response.status === 404) {
-      return false; // Email não existe
+      return false;
     }
 
     if (response.ok) {
-      return true; // Email existe
+      return true;
     }
 
-    // Para outros status codes, assumir que não existe
     return false;
   } catch (error) {
     console.warn("Erro ao verificar email:", error);
-    return false; // Em caso de erro, permitir o cadastro
+    return false;
   }
 }
