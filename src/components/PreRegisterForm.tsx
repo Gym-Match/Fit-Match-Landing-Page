@@ -4,8 +4,7 @@ import { Crown, Gift, CheckCircle, PartyPopper } from "lucide-react";
 import { usePreRegister } from "../hooks/usePreRegister";
 
 export default function PreRegisterForm() {
-  const { isLoading, showSuccess, remainingSlots, submitForm } =
-    usePreRegister();
+  const { isLoading, showSuccess, submitForm } = usePreRegister();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -107,9 +106,7 @@ export default function PreRegisterForm() {
             </button>
 
             <p className="disclaimer">
-              {remainingSlots > 0
-                ? `* Limitado a apenas ${remainingSlots} vagas para o Premium gratuito!`
-                : "* Promoção encerrada - todas as vagas foram preenchidas!"}
+              * Limitado a apenas 1000 vagas para o Premium gratuito!
             </p>
           </form>
         </>
@@ -118,8 +115,21 @@ export default function PreRegisterForm() {
           <PartyPopper className="success-icon" size={48} />
           <h4>Parabéns! Você garantiu seu Premium!</h4>
           <p>
-            Seu primeiro mês será 100% gratuito! Você receberá um e-mail com
-            todas as informações quando o app for lançado.
+            Seu primeiro mês será 100% gratuito! Você receberá um e-mail de
+            confirmação do pré-cadastro com todas as informações quando o app
+            for lançado.
+          </p>
+          <p
+            style={{
+              marginTop: "15px",
+              fontSize: "0.9rem",
+              color: "var(--text-secondary)",
+            }}
+          >
+            Caso não receba o e-mail, entre em contato conosco pelo e-mail:{" "}
+            <strong style={{ color: "var(--primary-green)" }}>
+              contato@fitmatchbr.com
+            </strong>
           </p>
         </div>
       )}

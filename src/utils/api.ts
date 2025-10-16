@@ -18,11 +18,14 @@ export interface ApiError {
   errors?: Record<string, string[]>;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
+const API_BASE_URL = process.env.API_URL || "http://localhost:3000";
 
 export async function createUser(
   userData: CreateUserRequest
 ): Promise<CreateUserResponse> {
+  console.log("Enviando dados:", userData);
+  console.log("API URL:", API_BASE_URL);
+
   try {
     const response = await fetch(`${API_BASE_URL}/api/users/`, {
       method: "POST",

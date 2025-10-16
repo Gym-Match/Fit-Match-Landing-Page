@@ -56,16 +56,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title:
-      "Fit Match | O primeiro app de relacionamentos 100% focado em fitness",
-    description:
-      "Conecte-se com pessoas que compartilham sua paixão por uma vida saudável. Cadastre-se e ganhe 1 mês Premium grátis!",
-    images: ["/assets/logo.png"],
-    creator: "@fitmatchapp",
-    site: "@fitmatchapp",
-  },
   viewport: {
     width: "device-width",
     initialScale: 1,
