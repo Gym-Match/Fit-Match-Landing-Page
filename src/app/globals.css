@@ -283,6 +283,7 @@ body {
 .features-section {
   padding: 4rem 0;
   width: 100%;
+  border-radius: 10px;
 }
 
 .section-content {
@@ -402,6 +403,9 @@ body {
   font-size: 3rem;
   display: block;
   margin-bottom: 1rem;
+  color: var(--primary-green);
+  width: 100%;
+  text-align: center;
 }
 
 .modality h4 {
@@ -464,6 +468,7 @@ body {
   margin-bottom: 1.5rem;
   display: block;
   transition: all 0.4s ease;
+  color: var(--primary-purple);
 }
 
 .benefit-card h3 {
@@ -1136,7 +1141,26 @@ a,
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Tablet responsiveness */
+/* Centralização completa do rodapé para dispositivos abaixo de 768px */
+@media (max-width: 767px) {
+  .footer-brand,
+  .footer-contact,
+  .footer-social {
+    text-align: center;
+  }
+
+  .footer-logo {
+    justify-content: center;
+  }
+
+  .contact-item {
+    justify-content: center;
+  }
+
+  .social-links {
+    align-items: center;
+  }
+}
 @media (max-width: 1024px) and (min-width: 769px) {
   .modalities-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -1147,11 +1171,69 @@ a,
 /* Responsive */
 @media (max-width: 768px) {
   .main-content {
-    padding: 2rem 2rem;
+    padding: 0.5rem 2rem;
   }
 
   .section-content {
     padding: 0 2rem;
+  }
+
+  /* Reduzir espaçamento entre seções no mobile */
+  .how-it-works,
+  .fitness-types,
+  .exclusive-benefits,
+  .features-section {
+    padding: 2.5rem 0;
+  }
+
+  /* Reduzir ainda mais o espaçamento da primeira seção após o hero */
+  .features-section {
+    padding: 1.5rem 0 2.5rem 0;
+  }
+
+  /* Reduzir espaçamento da hero section para que as próximas seções apareçam mais cedo */
+  .hero {
+    padding: 10px 0 10px 0;
+    min-height: 60vh;
+  }
+
+  /* Reduzir espaçamento da seção highlight */
+  .highlight-section {
+    margin: 40px 0 20px 0;
+    padding: 40px 20px;
+  }
+
+  .highlight-title {
+    font-size: 1.8rem;
+  }
+
+  .highlight-subtitle {
+    font-size: 1rem;
+  }
+
+  /* Reduzir espaçamento entre highlight e how-it-works */
+  .how-it-works {
+    padding: 1.5rem 0 2.5rem 0;
+  }
+
+  /* Esconder ícones da seção How It Works apenas no mobile */
+  .step-icon {
+    display: none;
+  }
+
+  /* Ajustar espaçamento do título quando ícones estão escondidos */
+  .step-content h3 {
+    justify-content: center;
+    gap: 0;
+  }
+
+  /* Centralizar ícones da seção de benefícios no mobile */
+  .benefit-icon {
+    margin: 0 auto 1.5rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-purple);
   }
 
   .footer {
@@ -1164,9 +1246,18 @@ a,
 
   .hero-container {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 20px;
     text-align: center;
     padding: 0 20px;
+  }
+
+  /* Centralizar o badge "Em breve" no mobile */
+  .hero-left {
+    align-items: center;
+  }
+
+  .badge {
+    align-self: center;
   }
 
   .hero-title {
@@ -1185,6 +1276,11 @@ a,
       "content";
     gap: 30px;
     text-align: center;
+    padding: 20px 0;
+  }
+
+  .features-grid {
+    gap: 40px;
   }
 
   .footer-main {
@@ -1202,6 +1298,11 @@ a,
     text-align: center;
   }
 
+  /* Centralizar links legais no mobile */
+  .legal-links {
+    justify-content: center;
+  }
+
   .steps {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -1210,6 +1311,15 @@ a,
   .modalities-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
+  }
+
+  /* Centralizar ícones das modalidades no mobile */
+  .modality-icon {
+    margin: 0 auto 1rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-green);
   }
 
   .benefits-grid {
@@ -1228,11 +1338,75 @@ a,
 
 @media (max-width: 480px) {
   .main-content {
-    padding: 1rem;
+    padding: 0.25rem 1rem;
   }
 
   .section-content {
     padding: 0 1rem;
+  }
+
+  /* Espaçamento ainda menor para telas muito pequenas */
+  .how-it-works,
+  .fitness-types,
+  .exclusive-benefits,
+  .features-section {
+    padding: 2rem 0;
+  }
+
+  /* Primeira seção ainda mais próxima do hero em telas pequenas */
+  .features-section {
+    padding: 1rem 0 2rem 0;
+  }
+
+  /* Hero section mais compacta */
+  .hero {
+    padding: 5px 0 5px 0;
+    min-height: 55vh;
+  }
+
+  /* Highlight section mais compacta */
+  .highlight-section {
+    margin: 30px 0 15px 0;
+    padding: 30px 15px;
+  }
+
+  .highlight-title {
+    font-size: 1.5rem;
+  }
+
+  .highlight-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .features-grid {
+    gap: 30px;
+  }
+
+  /* Espaçamento ainda menor para how-it-works */
+  .how-it-works {
+    padding: 1rem 0 2rem 0;
+  }
+
+  /* Garantir que os ícones do How It Works estejam escondidos */
+  .step-icon {
+    display: none !important;
+  }
+
+  /* Ajustar espaçamento do título quando ícones estão escondidos */
+  .step-content h3 {
+    justify-content: center;
+    gap: 0;
+  }
+
+  /* Ícones dos benefícios centralizados em telas pequenas */
+  .benefit-icon {
+    margin: 0 auto 1.5rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    color: var(--primary-purple);
   }
 
   .footer {
@@ -1245,6 +1419,17 @@ a,
 
   .hero-container {
     padding: 0 10px;
+    gap: 15px;
+  }
+
+  /* Garantir centralização do badge em telas pequenas */
+  .hero-left {
+    align-items: center;
+  }
+
+  .badge {
+    align-self: center;
+    margin: 0 auto;
   }
 
   .hero-title {
@@ -1261,5 +1446,17 @@ a,
 
   .modalities-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Ícones das modalidades centralizados em telas pequenas */
+  .modality-icon {
+    margin: 0 auto 1rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    color: var(--primary-green);
   }
 }

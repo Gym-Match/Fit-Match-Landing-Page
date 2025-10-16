@@ -21,9 +21,7 @@ export default function Footer() {
             <h4>Entre em Contato</h4>
             <div className="contact-item">
               <Mail className="contact-icon" size={20} />
-              <a href="mailto:contato@fitmatch.com.br">
-                contato@fitmatch.com.br
-              </a>
+              <a href="mailto:contato@fitmatchbr.com">contato@fitmatchbr.com</a>
             </div>
           </div>
 

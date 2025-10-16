@@ -1,61 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { Crown, Gift, CheckCircle, PartyPopper } from "lucide-react";
-
-interface UserData {
-  fullName: string;
-  email: string;
-  registeredAt: string;
-  premiumCode: string;
-}
+import { usePreRegister } from "../hooks/usePreRegister";
 
 export default function PreRegisterForm() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [premiumCode, setPremiumCode] = useState("");
-  const [registeredUsers, setRegisteredUsers] = useState<UserData[]>([]);
-
-  const MAX_PREMIUM_USERS = 1000;
-
-  // Carregar usuários do localStorage quando o componente montar
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("fitMatchUsers");
-      if (stored) {
-        setRegisteredUsers(JSON.parse(stored));
-      }
-    }
-  }, []);
-
-  const generatePremiumCode = () => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let code = "PREMIUM";
-    for (let i = 0; i < 4; i++) {
-      code += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return code;
-  };
-
-  const isValidEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const hasFullName = (name: string) => {
-    return (
-      name
-        .trim()
-        .split(" ")
-        .filter((word) => word.length > 0).length >= 2
-    );
-  };
-
-  const isEmailAlreadyRegistered = (email: string) => {
-    return registeredUsers.some(
-      (user) => user.email.toLowerCase() === email.toLowerCase()
-    );
-  };
+  const { isLoading, showSuccess, premiumCode, remainingSlots, submitForm } =
+    usePreRegister();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -64,74 +14,16 @@ export default function PreRegisterForm() {
     const fullName = (formData.get("fullName") as string).trim();
     const email = (formData.get("email") as string).trim();
 
-    // Validações
-    if (!fullName || fullName.length < 2) {
-      alert("Por favor, digite um nome válido.");
-      return;
-    }
-
-    if (!hasFullName(fullName)) {
-      alert("Por favor, digite seu nome completo.");
-      return;
-    }
-
-    if (!email || !isValidEmail(email)) {
-      alert("Por favor, digite um e-mail válido.");
-      return;
-    }
-
-    if (registeredUsers.length >= MAX_PREMIUM_USERS) {
-      alert("Infelizmente todas as vagas premium já foram preenchidas! 😢");
-      return;
-    }
-
-    if (isEmailAlreadyRegistered(email)) {
-      alert("Este e-mail já garantiu o Premium gratuito! 🎉");
-      return;
-    }
-
-    // Mostrar loading
-    setIsLoading(true);
-
     try {
-      // Simular chamada para API
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await submitForm(fullName, email);
 
-      const userData: UserData = {
-        fullName,
-        email,
-        registeredAt: new Date().toISOString(),
-        premiumCode: generatePremiumCode(),
-      };
-
-      // Salvar dados localmente
-      const updatedUsers = [...registeredUsers, userData];
-      setRegisteredUsers(updatedUsers);
-
-      if (typeof window !== "undefined") {
-        localStorage.setItem("fitMatchUsers", JSON.stringify(updatedUsers));
-      }
-
-      // Mostrar sucesso
-      setPremiumCode(userData.premiumCode);
-      setShowSuccess(true);
-
-      // Reset form
+      // Reset form apenas se o cadastro foi bem sucedido
       (e.target as HTMLFormElement).reset();
-
-      // Voltar ao formulário após 10 segundos
-      setTimeout(() => {
-        setShowSuccess(false);
-      }, 10000);
     } catch (error) {
-      console.error("Erro ao registrar usuário:", error);
-      alert("Ocorreu um erro. Tente novamente.");
-    } finally {
-      setIsLoading(false);
+      // Mostrar erro para o usuário
+      alert((error as Error).message);
     }
   };
-
-  const remainingSlots = MAX_PREMIUM_USERS - registeredUsers.length;
 
   return (
     <div className="form-card">
@@ -229,24 +121,6 @@ export default function PreRegisterForm() {
             Seu primeiro mês será 100% gratuito! Você receberá um e-mail com seu
             código promocional quando o app for lançado.
           </p>
-          {premiumCode && (
-            <div
-              style={{
-                background: "linear-gradient(135deg, #7c3aed, #10b981)",
-                color: "white",
-                padding: "1rem",
-                borderRadius: "12px",
-                marginTop: "1rem",
-                fontWeight: 700,
-                fontFamily: "monospace",
-                letterSpacing: "2px",
-                textAlign: "center",
-              }}
-            >
-              Seu código Premium: <br />
-              <span style={{ fontSize: "1.2rem" }}>{premiumCode}</span>
-            </div>
-          )}
         </div>
       )}
     </div>
