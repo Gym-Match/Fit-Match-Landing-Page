@@ -148,7 +148,6 @@ export default function PreRegisterForm() {
           </h3>
           <div className="offer-highlight">
             <h4>1º MÊS PREMIUM GRÁTIS</h4>
-            <p className="offer-value">Valor: R$ 29,90</p>
           </div>
 
           <div className="benefits">
@@ -163,10 +162,6 @@ export default function PreRegisterForm() {
             <div className="benefit">
               <CheckCircle className="check" size={20} />
               <span>Ver quem curtiu você</span>
-            </div>
-            <div className="benefit">
-              <CheckCircle className="check" size={20} />
-              <span>Match garantido</span>
             </div>
           </div>
 

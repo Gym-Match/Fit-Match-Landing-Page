@@ -1,10 +1,4 @@
-import {
-  Heart,
-  Mail,
-  Instagram,
-  Music,
-  Briefcase,
-} from "lucide-react";
+import { Heart, Mail, Instagram, Music, Briefcase } from "lucide-react";
 
 export default function Footer() {
   return (
