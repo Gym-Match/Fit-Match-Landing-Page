@@ -63,11 +63,11 @@ export default function FeaturesSection() {
               />
             </div>
             <div className="feature-content">
-              <h3 className="feature-title">Produtos & Serviços Exclusivos</h3>
+              <h3 className="feature-title">Loja Fit Match</h3>
               <p className="feature-description">
-                Acesse suplementos, equipamentos e serviços de personal
-                trainers. Tudo que você precisa para potencializar seus
-                resultados.
+                Ganhe Fit Coins completando missões e troque por Superlikes,
+                revelar curtidas e outros produtos exclusivos. Complete desafios
+                diários e semanais para desbloquear funcionalidades especiais.
               </p>
             </div>
           </div>
