@@ -35,7 +35,7 @@ export default function FeaturesSection() {
           <div className="feature-item reverse">
             <div className="feature-image">
               <Image
-                src="/assets/chat.png"
+                src="/assets/chat.PNG"
                 alt="Converse com seus matchs"
                 className="feature-img"
                 width={400}
