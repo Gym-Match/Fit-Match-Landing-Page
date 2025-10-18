@@ -13,11 +13,10 @@ export default function PreRegisterForm() {
     const formData = new FormData(e.currentTarget);
     const fullName = (formData.get("fullName") as string).trim();
     const email = (formData.get("email") as string).trim();
+    const invitationCode = (formData.get("invitation_code") as string)?.trim();
 
     try {
-      await submitForm(fullName, email);
-
-      // Reset form apenas se o cadastro foi bem sucedido
+      await submitForm(fullName, email, invitationCode);
       (e.target as HTMLFormElement).reset();
     } catch (error) {
       // Mostrar erro para o usuário
@@ -84,6 +83,18 @@ export default function PreRegisterForm() {
                 name="email"
                 required
                 placeholder="Digite seu melhor e-mail"
+              />
+            </div>
+
+            <div className="input-group">
+              <label htmlFor="invitation_code">
+                Código de convite (opcional)
+              </label>
+              <input
+                type="text"
+                id="invitation_code"
+                name="invitation_code"
+                placeholder="Digite seu código de convite"
               />
             </div>
 

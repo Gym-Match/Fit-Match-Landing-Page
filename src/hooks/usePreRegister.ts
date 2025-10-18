@@ -17,7 +17,11 @@ interface UsePreRegisterReturn {
   showSuccess: boolean;
   registeredUsers: UserData[];
   remainingSlots: number;
-  submitForm: (fullName: string, email: string) => Promise<void>;
+  submitForm: (
+    fullName: string,
+    email: string,
+    invitationCode?: string
+  ) => Promise<void>;
   closeSuccess: () => void;
 }
 
@@ -57,7 +61,11 @@ export function usePreRegister(): UsePreRegisterReturn {
     );
   };
 
-  const submitForm = async (fullName: string, email: string) => {
+  const submitForm = async (
+    fullName: string,
+    email: string,
+    invitationCode?: string
+  ) => {
     if (!fullName || fullName.length < 2) {
       throw new Error("Por favor, digite um nome válido.");
     }
@@ -86,6 +94,7 @@ export function usePreRegister(): UsePreRegisterReturn {
       const apiData: CreateUserRequest = {
         name: fullName,
         email: email,
+        invitation_code: invitationCode || undefined,
       };
 
       await createUser(apiData);
@@ -114,15 +123,21 @@ export function usePreRegister(): UsePreRegisterReturn {
       const apiError = error as ApiError;
 
       if (apiError.status === 400) {
-        if (apiError.message.toLowerCase().includes("email") || apiError.message === "Email já está em uso") {
-          toast.info("Este e-mail já fez o pré-cadastro e já garantiu o um mês premium grátis! 🎉", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+        if (
+          apiError.message.toLowerCase().includes("email") ||
+          apiError.message === "Email já está em uso"
+        ) {
+          toast.info(
+            "Este e-mail já fez o pré-cadastro e já garantiu o um mês premium grátis! 🎉",
+            {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            }
+          );
           return; // Não lançar erro, apenas mostrar o toast
         } else {
           throw new Error(

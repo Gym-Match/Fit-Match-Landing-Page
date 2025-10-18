@@ -1,7 +1,7 @@
-// Tipos para a API
 export interface CreateUserRequest {
   name: string;
   email: string;
+  invitation_code?: string;
 }
 
 export interface CreateUserResponse {
