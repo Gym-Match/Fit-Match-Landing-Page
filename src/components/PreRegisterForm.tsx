@@ -5,8 +5,7 @@ import { toast } from "react-toastify";
 import { usePreRegister } from "../hooks/usePreRegister";
 
 export default function PreRegisterForm() {
-  const { isLoading, showSuccess, registeredUsers, submitForm } =
-    usePreRegister();
+  const { isLoading, showSuccess, submitForm } = usePreRegister();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
