@@ -66,22 +66,26 @@ export function usePreRegister(): UsePreRegisterReturn {
       const apiError = error as ApiError;
       console.log("API Error:", apiError);
 
+      // Verificar se é erro de email duplicado ANTES de qualquer outra verificação
+      if (apiError.status === 400 && apiError.message && 
+          (apiError.message === "Email já está em uso" || apiError.message.toLowerCase().includes("email"))) {
+        toast.info("Este e-mail já fez o pré-cadastro e já garantiu o primeiro mês de premium! 🎉", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        setIsLoading(false);
+        return; // Não lançar erro, apenas mostrar o toast
+      }
+
+      // Para todos os outros erros, lançar exceção
       if (apiError.status === 400) {
-        if (apiError.message && (apiError.message === "Email já está em uso" || apiError.message.toLowerCase().includes("email"))) {
-          toast.info("Este e-mail já fez o pré-cadastro e já garantiu o primeiro mês de premium! 🎉", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
-          return; // Não lançar erro, apenas mostrar o toast
-        } else {
-          throw new Error(
-            apiError.message || "Dados inválidos. Verifique as informações."
-          );
-        }
+        throw new Error(
+          apiError.message || "Dados inválidos. Verifique as informações."
+        );
       } else if (apiError.status === 0) {
         throw new Error(apiError.message);
       } else if (apiError.status >= 500) {
