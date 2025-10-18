@@ -10,7 +10,6 @@ interface UserData {
   fullName: string;
   email: string;
   registeredAt: string;
-  referralCode?: string;
 }
 
 interface UsePreRegisterReturn {
@@ -18,7 +17,7 @@ interface UsePreRegisterReturn {
   showSuccess: boolean;
   registeredUsers: UserData[];
   remainingSlots: number;
-  submitForm: (fullName: string, email: string, referralCode?: string) => Promise<void>;
+  submitForm: (fullName: string, email: string) => Promise<void>;
   closeSuccess: () => void;
 }
 
@@ -58,7 +57,7 @@ export function usePreRegister(): UsePreRegisterReturn {
     );
   };
 
-  const submitForm = async (fullName: string, email: string, referralCode?: string) => {
+  const submitForm = async (fullName: string, email: string) => {
     if (!fullName || fullName.length < 2) {
       throw new Error("Por favor, digite um nome válido.");
     }
@@ -87,7 +86,6 @@ export function usePreRegister(): UsePreRegisterReturn {
       const apiData: CreateUserRequest = {
         name: fullName,
         email: email,
-        referralCode: referralCode || undefined,
       };
 
       const response = await createUser(apiData);
@@ -96,7 +94,6 @@ export function usePreRegister(): UsePreRegisterReturn {
         fullName,
         email,
         registeredAt: new Date().toISOString(),
-        referralCode: response.referralCode,
       };
 
       const updatedUsers = [...registeredUsers, userData];

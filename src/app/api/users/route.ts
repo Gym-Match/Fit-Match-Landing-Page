@@ -6,14 +6,12 @@ const users: Array<{
   name: string; 
   email: string; 
   createdAt: string;
-  referralCode: string;
-  referredBy?: string;
 }> = [];
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, referralCode } = body;
+    const { name, email } = body;
 
     // Validações básicas
     if (!name || !email) {
@@ -32,40 +30,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Gerar código de indicação único
-    const generateReferralCode = () => {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      let result = '';
-      for (let i = 0; i < 6; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return result;
-    };
-
-    let userReferralCode = generateReferralCode();
-    
-    // Garantir que o código seja único
-    while (users.some(user => user.referralCode === userReferralCode)) {
-      userReferralCode = generateReferralCode();
-    }
-
-    // Verificar se o código de indicação fornecido é válido
-    let referredBy = undefined;
-    if (referralCode) {
-      const referrer = users.find(user => user.referralCode === referralCode.toUpperCase());
-      if (referrer) {
-        referredBy = referrer.id;
-      }
-    }
 
     // Criar novo usuário
     const newUser = {
       id: Date.now().toString(),
       name,
       email: email.toLowerCase(),
-      createdAt: new Date().toISOString(),
-      referralCode: userReferralCode,
-      referredBy
+      createdAt: new Date().toISOString()
     };
 
     users.push(newUser);
@@ -75,8 +46,6 @@ export async function POST(request: NextRequest) {
       name: newUser.name,
       email: newUser.email,
       createdAt: newUser.createdAt,
-      referralCode: newUser.referralCode,
-      referredBy: newUser.referredBy,
       message: 'Usuário cadastrado com sucesso!'
     }, { 
       status: 201,

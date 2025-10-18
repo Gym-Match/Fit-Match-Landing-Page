@@ -2,7 +2,6 @@
 export interface CreateUserRequest {
   name: string;
   email: string;
-  referralCode?: string;
 }
 
 export interface CreateUserResponse {
@@ -10,8 +9,6 @@ export interface CreateUserResponse {
   name: string;
   email: string;
   createdAt?: string;
-  referralCode?: string;
-  referredBy?: string;
   message?: string;
 }
 

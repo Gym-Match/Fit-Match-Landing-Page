@@ -5,7 +5,6 @@ import HeroSection from "@/components/HeroSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import FitnessTypesSection from "@/components/FitnessTypesSection";
-import ReferralSection from "@/components/ReferralSection";
 import ExclusiveBenefitsSection from "@/components/ExclusiveBenefitsSection";
 import Footer from "@/components/Footer";
 import BackgroundDecoration from "@/components/BackgroundDecoration";
@@ -25,7 +24,6 @@ export default function Home() {
           <FeaturesSection />
           <HowItWorksSection />
           <FitnessTypesSection />
-          <ReferralSection />
           <ExclusiveBenefitsSection />
         </main>
 

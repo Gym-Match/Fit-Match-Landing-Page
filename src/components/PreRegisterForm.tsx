@@ -14,10 +14,9 @@ export default function PreRegisterForm() {
     const formData = new FormData(e.currentTarget);
     const fullName = (formData.get("fullName") as string).trim();
     const email = (formData.get("email") as string).trim();
-    const referralCode = (formData.get("referralCode") as string).trim();
 
     try {
-      await submitForm(fullName, email, referralCode);
+      await submitForm(fullName, email);
 
       // Reset form apenas se o cadastro foi bem sucedido
       (e.target as HTMLFormElement).reset();
@@ -89,22 +88,6 @@ export default function PreRegisterForm() {
               />
             </div>
 
-            <div className="input-group">
-              <label htmlFor="referralCode">
-                Código de Indicação <span className="optional">(Opcional)</span>
-              </label>
-              <input
-                type="text"
-                id="referralCode"
-                name="referralCode"
-                placeholder="Digite o código de quem te indicou"
-                style={{ textTransform: "uppercase" }}
-              />
-              <small className="input-hint">
-                Se alguém te indicou, use o código dela para ganhar benefícios!
-              </small>
-            </div>
-
             <button
               type="submit"
               className={`submit-btn ${isLoading ? "loading" : ""}`}
@@ -145,20 +128,6 @@ export default function PreRegisterForm() {
             confirmação do pré-cadastro com todas as informações quando o app
             for lançado.
           </p>
-
-          {registeredUsers.length > 0 &&
-            registeredUsers[registeredUsers.length - 1]?.referralCode && (
-              <div className="referral-code-display">
-                <h5>Seu código de indicação:</h5>
-                <div className="referral-code">
-                  {registeredUsers[registeredUsers.length - 1].referralCode}
-                </div>
-                <p className="referral-instructions">
-                  Compartilhe este código com seus amigos e ganhe 100 Fit Coins
-                  para cada indicação!
-                </p>
-              </div>
-            )}
 
           <p
             style={{
