@@ -67,7 +67,7 @@ export function usePreRegister(): UsePreRegisterReturn {
 
       if (apiError.status === 400) {
         if (apiError.message === "Email já está em uso" || apiError.message.toLowerCase().includes("email")) {
-          toast.info("Este e-mail já fez o pré-cadastro e já garantiu o um mês premium grátis! 🎉", {
+          toast.info("Este e-mail já fez o pré-cadastro e já garantiu o primeiro mês de premium! 🎉", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
