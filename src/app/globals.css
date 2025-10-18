@@ -719,6 +719,19 @@ body {
   color: var(--text-secondary);
 }
 
+.input-group .optional {
+  color: var(--text-secondary);
+  font-weight: 400;
+  font-size: 0.75rem;
+}
+
+.input-group .input-hint {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
 .submit-btn {
   background: var(--gradient-fitness);
   border: none;
@@ -780,6 +793,43 @@ body {
   font-size: 3rem;
   display: block;
   margin-bottom: 1rem;
+}
+
+.referral-code-display {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid var(--success-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.referral-code-display h5 {
+  color: var(--primary-green);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.referral-code {
+  background: var(--dark-bg);
+  border: 2px solid var(--primary-green);
+  border-radius: 8px;
+  padding: 1rem;
+  font-family: 'Courier New', monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--primary-green);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  animation: pulse 2s infinite;
+}
+
+.referral-instructions {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0;
 }
 
 /* Footer */

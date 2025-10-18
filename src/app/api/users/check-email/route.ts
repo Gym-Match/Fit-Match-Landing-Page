@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// Simulando um banco de dados em memória (mesmo do users/route.ts)
 const users: Array<{ id: string; name: string; email: string; createdAt: string }> = [];
 
 export async function POST(request: NextRequest) {
@@ -15,7 +14,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Verificar se email existe
     const existingUser = users.find(user => user.email.toLowerCase() === email.toLowerCase());
     
     if (existingUser) {
