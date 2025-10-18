@@ -1,6 +1,7 @@
 "use client";
 
 import { Crown, Gift, CheckCircle, PartyPopper } from "lucide-react";
+import { toast } from "react-toastify";
 import { usePreRegister } from "../hooks/usePreRegister";
 
 export default function PreRegisterForm() {
@@ -20,7 +21,14 @@ export default function PreRegisterForm() {
       (e.target as HTMLFormElement).reset();
     } catch (error) {
       // Mostrar erro para o usuário
-      alert((error as Error).message);
+      toast.error((error as Error).message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 

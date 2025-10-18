@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import {
   createUser,
   type CreateUserRequest,
@@ -113,8 +114,16 @@ export function usePreRegister(): UsePreRegisterReturn {
       const apiError = error as ApiError;
 
       if (apiError.status === 400) {
-        if (apiError.message.toLowerCase().includes("email")) {
-          throw new Error("Este e-mail já garantiu o Premium gratuito! 🎉");
+        if (apiError.message.toLowerCase().includes("email") || apiError.message === "Email já está em uso") {
+          toast.info("Este e-mail já fez o pré-cadastro e já garantiu o um mês premium grátis! 🎉", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+          return; // Não lançar erro, apenas mostrar o toast
         } else {
           throw new Error(
             apiError.message || "Dados inválidos. Verifique as informações."

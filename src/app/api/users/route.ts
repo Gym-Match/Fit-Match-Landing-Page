@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     const existingUser = users.find(user => user.email.toLowerCase() === email.toLowerCase());
     if (existingUser) {
       return NextResponse.json(
-        { message: 'Este email já está cadastrado' },
+        { error: 'Email já está em uso' },
         { status: 400 }
       );
     }
