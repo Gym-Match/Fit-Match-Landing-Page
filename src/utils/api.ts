@@ -39,7 +39,7 @@ export async function createUser(
 
     if (!response.ok) {
       const error: ApiError = {
-        message: data.message || "Erro desconhecido",
+        message: data.message || data.error || "Erro desconhecido",
         status: response.status,
         errors: data.errors,
       };
