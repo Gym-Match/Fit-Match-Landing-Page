@@ -64,9 +64,10 @@ export function usePreRegister(): UsePreRegisterReturn {
       console.error("Erro ao registrar usuário:", error);
 
       const apiError = error as ApiError;
+      console.log("API Error:", apiError);
 
       if (apiError.status === 400) {
-        if (apiError.message === "Email já está em uso" || apiError.message.toLowerCase().includes("email")) {
+        if (apiError.message && (apiError.message === "Email já está em uso" || apiError.message.toLowerCase().includes("email"))) {
           toast.info("Este e-mail já fez o pré-cadastro e já garantiu o primeiro mês de premium! 🎉", {
             position: "top-right",
             autoClose: 5000,
