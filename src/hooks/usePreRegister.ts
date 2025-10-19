@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import {
   createUser,
@@ -6,17 +6,9 @@ import {
   type ApiError,
 } from "../utils/api";
 
-interface UserData {
-  fullName: string;
-  email: string;
-  registeredAt: string;
-}
-
 interface UsePreRegisterReturn {
   isLoading: boolean;
   showSuccess: boolean;
-  registeredUsers: UserData[];
-  remainingSlots: number;
   submitForm: (
     fullName: string,
     email: string,
@@ -24,8 +16,6 @@ interface UsePreRegisterReturn {
   ) => Promise<void>;
   closeSuccess: () => void;
 }
-
-const MAX_PREMIUM_USERS = 1000;
 
 const isValidEmail = (email: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -44,22 +34,6 @@ const hasFullName = (name: string) => {
 export function usePreRegister(): UsePreRegisterReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [registeredUsers, setRegisteredUsers] = useState<UserData[]>([]);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("fitMatchUsers");
-      if (stored) {
-        setRegisteredUsers(JSON.parse(stored));
-      }
-    }
-  }, []);
-
-  const isEmailAlreadyRegistered = (email: string) => {
-    return registeredUsers.some(
-      (user) => user.email.toLowerCase() === email.toLowerCase()
-    );
-  };
 
   const submitForm = async (
     fullName: string,
@@ -78,16 +52,6 @@ export function usePreRegister(): UsePreRegisterReturn {
       throw new Error("Por favor, digite um e-mail válido.");
     }
 
-    if (registeredUsers.length >= MAX_PREMIUM_USERS) {
-      throw new Error(
-        "Infelizmente todas as vagas premium já foram preenchidas! 😢"
-      );
-    }
-
-    if (isEmailAlreadyRegistered(email)) {
-      throw new Error("Este e-mail já garantiu o Premium gratuito! 🎉");
-    }
-
     setIsLoading(true);
 
     try {
@@ -98,19 +62,6 @@ export function usePreRegister(): UsePreRegisterReturn {
       };
 
       await createUser(apiData);
-
-      const userData: UserData = {
-        fullName,
-        email,
-        registeredAt: new Date().toISOString(),
-      };
-
-      const updatedUsers = [...registeredUsers, userData];
-      setRegisteredUsers(updatedUsers);
-
-      if (typeof window !== "undefined") {
-        localStorage.setItem("fitMatchUsers", JSON.stringify(updatedUsers));
-      }
 
       setShowSuccess(true);
 
@@ -140,6 +91,8 @@ export function usePreRegister(): UsePreRegisterReturn {
           );
           return; // Não lançar erro, apenas mostrar o toast
         } else {
+          // Para códigos de convite inválidos e outros erros 400, lançar o erro
+          // para ser tratado pelo componente
           throw new Error(
             apiError.message || "Dados inválidos. Verifique as informações."
           );
@@ -164,13 +117,9 @@ export function usePreRegister(): UsePreRegisterReturn {
     setShowSuccess(false);
   };
 
-  const remainingSlots = MAX_PREMIUM_USERS - registeredUsers.length;
-
   return {
     isLoading,
     showSuccess,
-    registeredUsers,
-    remainingSlots,
     submitForm,
     closeSuccess,
   };

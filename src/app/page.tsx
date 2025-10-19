@@ -3,6 +3,7 @@
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import FeaturesSection from "@/components/FeaturesSection";
+import InviteCodeSection from "@/components/InviteCodeSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import FitnessTypesSection from "@/components/FitnessTypesSection";
 import ExclusiveBenefitsSection from "@/components/ExclusiveBenefitsSection";
@@ -25,6 +26,7 @@ export default function Home() {
           <HowItWorksSection />
           <FitnessTypesSection />
           <ExclusiveBenefitsSection />
+          <InviteCodeSection />
         </main>
 
         <BackgroundDecoration />
