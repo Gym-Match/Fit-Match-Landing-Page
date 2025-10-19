@@ -1,9 +1,37 @@
 "use client";
 
 import { Gift, Users, Coins, Mail, ArrowRight } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 import "../styles/InviteCodeSection.css";
 
 export default function InviteCodeSection() {
+  const steps = [
+    {
+      number: 1,
+      icon: Mail,
+      title: "Receba seu código",
+      description:
+        "Após o pré-cadastro, você receberá um código único de 8 caracteres por email",
+    },
+    {
+      number: 2,
+      icon: Users,
+      title: "Compartilhe com amigos",
+      description:
+        "Envie seu código para amigos que também querem encontrar parceiros de treino",
+    },
+    {
+      number: 3,
+      icon: Coins,
+      title: "Ganhe FitCoins",
+      description:
+        "A cada amigo que usar seu código, você ganha FitCoins para usar quando o app for lançado",
+    },
+  ];
+
   return (
     <section className="invite-code-section">
       <div className="section-content">
@@ -20,45 +48,58 @@ export default function InviteCodeSection() {
           </p>
         </div>
 
-        <div className="invite-grid">
-          {/* Step 1 */}
-          <div className="invite-step">
-            <div className="step-number">1</div>
-            <div className="step-icon">
-              <Mail size={32} />
-            </div>
-            <h3 className="step-title">Receba seu código</h3>
-            <p className="step-description">
-              Após o pré-cadastro, você receberá um código único de 8 caracteres
-              por email
-            </p>
-          </div>
+        {/* Grid para desktop */}
+        <div className="invite-grid desktop-grid">
+          {steps.map((step, index) => {
+            const IconComponent = step.icon;
+            return (
+              <div key={index} className="invite-step">
+                <div className="step-number">{step.number}</div>
+                <div className="step-icon">
+                  <IconComponent size={32} />
+                </div>
+                <h3 className="step-title">{step.title}</h3>
+                <p className="step-description">{step.description}</p>
+              </div>
+            );
+          })}
+        </div>
 
-          {/* Step 2 */}
-          <div className="invite-step">
-            <div className="step-number">2</div>
-            <div className="step-icon">
-              <Users size={32} />
-            </div>
-            <h3 className="step-title">Compartilhe com amigos</h3>
-            <p className="step-description">
-              Envie seu código para amigos que também querem encontrar parceiros
-              de treino
-            </p>
-          </div>
-
-          {/* Step 3 */}
-          <div className="invite-step">
-            <div className="step-number">3</div>
-            <div className="step-icon">
-              <Coins size={32} />
-            </div>
-            <h3 className="step-title">Ganhe FitCoins</h3>
-            <p className="step-description">
-              A cada amigo que usar seu código, você ganha FitCoins para usar
-              quando o app for lançado
-            </p>
-          </div>
+        {/* Carrossel para mobile */}
+        <div className="invite-swiper mobile-carousel">
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            spaceBetween={20}
+            slidesPerView={1}
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+            }}
+            pagination={{
+              clickable: true,
+              bulletClass: "swiper-pagination-bullet custom-bullet",
+              bulletActiveClass:
+                "swiper-pagination-bullet-active custom-bullet-active",
+            }}
+            loop={true}
+            className="invite-swiper-container"
+          >
+            {steps.map((step, index) => {
+              const IconComponent = step.icon;
+              return (
+                <SwiperSlide key={index}>
+                  <div className="invite-step">
+                    <div className="step-number">{step.number}</div>
+                    <div className="step-icon">
+                      <IconComponent size={32} />
+                    </div>
+                    <h3 className="step-title">{step.title}</h3>
+                    <p className="step-description">{step.description}</p>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
         </div>
 
         <div className="fitcoins-info">

@@ -1,7 +1,7 @@
 /* Invite Code Section Styles */
 .invite-code-section {
   width: 100%;
-  padding: 6rem 0;
+  padding: 2.5rem 0;
   background: linear-gradient(
     135deg,
     rgba(124, 58, 237, 0.05) 0%,
@@ -319,10 +319,22 @@
   }
 }
 
+/* Swiper carousel for mobile */
+.invite-swiper {
+  display: none;
+  margin-top: 3rem;
+  width: 100%;
+}
+
+.invite-swiper-container {
+  position: relative;
+  padding-bottom: 60px;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .invite-code-section {
-    padding: 4rem 0;
+    padding: 1.5rem 0;
   }
 
   .section-content {
@@ -330,7 +342,7 @@
   }
 
   .invite-header {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
   }
 
   .invite-icon {
@@ -345,6 +357,14 @@
 
   .invite-subtitle {
     font-size: 1.1rem;
+  }
+
+  .desktop-grid {
+    display: none !important;
+  }
+
+  .invite-swiper {
+    display: block;
   }
 
   .invite-grid {
