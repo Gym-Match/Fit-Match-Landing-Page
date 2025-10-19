@@ -3,32 +3,52 @@
 import { Crown, Gift, CheckCircle, PartyPopper } from "lucide-react";
 import { toast } from "react-toastify";
 import { usePreRegister } from "../hooks/usePreRegister";
+import { useState } from "react";
 
 export default function PreRegisterForm() {
   const { isLoading, showSuccess, submitForm } = usePreRegister();
+  const [invitationCodeError, setInvitationCodeError] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setInvitationCodeError(false); // Reset error state
 
     const formData = new FormData(e.currentTarget);
     const fullName = (formData.get("fullName") as string).trim();
     const email = (formData.get("email") as string).trim();
+    const invitationCode = (formData.get("invitation_code") as string)?.trim();
 
     try {
-      await submitForm(fullName, email);
-
-      // Reset form apenas se o cadastro foi bem sucedido
+      await submitForm(fullName, email, invitationCode);
       (e.target as HTMLFormElement).reset();
     } catch (error) {
-      // Mostrar erro para o usuário
-      toast.error((error as Error).message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      const errorMessage = (error as Error).message;
+
+      // Se o erro for relacionado ao código de convite, marcar o campo com erro visual
+      if (errorMessage.includes("Código de convite inválido")) {
+        setInvitationCodeError(true);
+        toast.error(
+          "❌ Código de convite inválido! Verifique se digitou corretamente ou deixe em branco se não tiver um código.",
+          {
+            position: "top-right",
+            autoClose: 6000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          }
+        );
+      } else {
+        // Mostrar outros erros para o usuário
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      }
     }
   };
 
@@ -85,6 +105,25 @@ export default function PreRegisterForm() {
                 required
                 placeholder="Digite seu melhor e-mail"
               />
+            </div>
+
+            <div className="input-group">
+              <label htmlFor="invitation_code">
+                Código de convite (opcional)
+              </label>
+              <input
+                type="text"
+                id="invitation_code"
+                name="invitation_code"
+                placeholder="Digite seu código de convite"
+                className={invitationCodeError ? "error" : ""}
+                onChange={() => setInvitationCodeError(false)} // Limpar erro ao digitar
+              />
+              {invitationCodeError && (
+                <span className="error-message">
+                  Código de convite inválido
+                </span>
+              )}
             </div>
 
             <button

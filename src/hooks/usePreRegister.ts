@@ -9,7 +9,11 @@ import {
 interface UsePreRegisterReturn {
   isLoading: boolean;
   showSuccess: boolean;
-  submitForm: (fullName: string, email: string) => Promise<void>;
+  submitForm: (
+    fullName: string,
+    email: string,
+    invitationCode?: string
+  ) => Promise<void>;
   closeSuccess: () => void;
 }
 
@@ -31,7 +35,11 @@ export function usePreRegister(): UsePreRegisterReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const submitForm = async (fullName: string, email: string) => {
+  const submitForm = async (
+    fullName: string,
+    email: string,
+    invitationCode?: string
+  ) => {
     if (!fullName || fullName.length < 2) {
       throw new Error("Por favor, digite um nome válido.");
     }
@@ -44,13 +52,13 @@ export function usePreRegister(): UsePreRegisterReturn {
       throw new Error("Por favor, digite um e-mail válido.");
     }
 
-
     setIsLoading(true);
 
     try {
       const apiData: CreateUserRequest = {
         name: fullName,
         email: email,
+        invitation_code: invitationCode || undefined,
       };
 
       await createUser(apiData);
@@ -67,25 +75,52 @@ export function usePreRegister(): UsePreRegisterReturn {
       console.log("API Error:", apiError);
 
       // Verificar se é erro de email duplicado ANTES de qualquer outra verificação
-      if (apiError.status === 400 && apiError.message && 
-          (apiError.message === "Email já está em uso" || apiError.message.toLowerCase().includes("email"))) {
-        toast.info("Este e-mail já fez o pré-cadastro e já garantiu o primeiro mês de premium! 🎉", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
+      if (
+        apiError.status === 400 &&
+        apiError.message &&
+        (apiError.message === "Email já está em uso" ||
+          apiError.message.toLowerCase().includes("email"))
+      ) {
+        toast.info(
+          "Este e-mail já fez o pré-cadastro e já garantiu o primeiro mês de premium! 🎉",
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          }
+        );
         setIsLoading(false);
         return; // Não lançar erro, apenas mostrar o toast
       }
 
       // Para todos os outros erros, lançar exceção
       if (apiError.status === 400) {
-        throw new Error(
-          apiError.message || "Dados inválidos. Verifique as informações."
-        );
+        if (
+          apiError.message.toLowerCase().includes("email") ||
+          apiError.message === "Email já está em uso"
+        ) {
+          toast.info(
+            "Este e-mail já fez o pré-cadastro e já garantiu o um mês premium grátis! 🎉",
+            {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            }
+          );
+          return; // Não lançar erro, apenas mostrar o toast
+        } else {
+          // Para códigos de convite inválidos e outros erros 400, lançar o erro
+          // para ser tratado pelo componente
+          throw new Error(
+            apiError.message || "Dados inválidos. Verifique as informações."
+          );
+        }
       } else if (apiError.status === 0) {
         throw new Error(apiError.message);
       } else if (apiError.status >= 500) {
