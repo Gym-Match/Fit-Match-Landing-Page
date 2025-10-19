@@ -25,6 +25,7 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* TODO: Ativar redes sociais quando estiverem prontas
           <div className="footer-social">
             <h4>Redes Sociais</h4>
             <div className="social-links">
@@ -42,6 +43,7 @@ export default function Footer() {
               </a>
             </div>
           </div>
+          */}
         </div>
 
         <div className="footer-bottom">
