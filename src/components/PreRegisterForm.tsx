@@ -28,7 +28,7 @@ export default function PreRegisterForm() {
       if (errorMessage.includes("Código de convite inválido")) {
         setInvitationCodeError(true);
         toast.error(
-          "❌ Código de convite inválido! Verifique se digitou corretamente ou deixe em branco se não tiver um código.",
+          "Código de convite inválido! Verifique se digitou corretamente ou deixe em branco se não tiver um código.",
           {
             position: "top-right",
             autoClose: 6000,

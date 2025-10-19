@@ -10,7 +10,10 @@ import {
   Trophy,
   Target,
 } from "lucide-react";
-import { useModalitiesCarousel } from "@/hooks/useModalitiesCarousel";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
 export default function FitnessTypesSection() {
   const modalities = [
@@ -56,20 +59,6 @@ export default function FitnessTypesSection() {
     },
   ];
 
-  const {
-    currentIndex,
-    totalPages,
-    itemsPerPage,
-    nextSlide,
-    prevSlide,
-    goToSlide,
-  } = useModalitiesCarousel(modalities.length);
-
-  const getVisibleModalities = () => {
-    const startIndex = currentIndex * itemsPerPage;
-    return modalities.slice(startIndex, startIndex + itemsPerPage);
-  };
-
   return (
     <section className="fitness-types">
       <div className="section-content">
@@ -78,59 +67,52 @@ export default function FitnessTypesSection() {
           Encontre parceiros para qualquer tipo de atividade física
         </p>
 
-        <div className="modalities-container">
-          {/* Grid para desktop */}
-          <div className="modalities-grid desktop-grid">
+        {/* Grid para desktop */}
+        <div className="modalities-grid desktop-grid">
+          {modalities.map((modality, index) => {
+            const IconComponent = modality.icon;
+            return (
+              <div key={index} className="modality">
+                <IconComponent className="modality-icon" size={48} />
+                <h4>{modality.title}</h4>
+                <p>{modality.description}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Carrossel para mobile */}
+        <div className="modalities-swiper mobile-carousel">
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            spaceBetween={20}
+            slidesPerView={1}
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+            }}
+            pagination={{
+              clickable: true,
+              bulletClass: "swiper-pagination-bullet custom-bullet",
+              bulletActiveClass:
+                "swiper-pagination-bullet-active custom-bullet-active",
+            }}
+            loop={true}
+            className="modalities-swiper-container"
+          >
             {modalities.map((modality, index) => {
               const IconComponent = modality.icon;
               return (
-                <div key={index} className="modality">
-                  <IconComponent className="modality-icon" size={48} />
-                  <h4>{modality.title}</h4>
-                  <p>{modality.description}</p>
-                </div>
+                <SwiperSlide key={index}>
+                  <div className="modality">
+                    <IconComponent className="modality-icon" size={48} />
+                    <h4>{modality.title}</h4>
+                    <p>{modality.description}</p>
+                  </div>
+                </SwiperSlide>
               );
             })}
-          </div>
-
-          {/* Carrossel para mobile */}
-          <div className="modalities-carousel mobile-carousel">
-            <div className="carousel-container">
-              <div className="carousel-content">
-                <div
-                  className="carousel-track"
-                  style={{
-                    transform: `translateX(-${currentIndex * 100}%)`,
-                  }}
-                >
-                  {modalities.map((modality, index) => {
-                    const IconComponent = modality.icon;
-                    return (
-                      <div key={index} className="modality carousel-slide">
-                        <IconComponent className="modality-icon" size={48} />
-                        <h4>{modality.title}</h4>
-                        <p>{modality.description}</p>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-
-            {/* Indicadores */}
-            <div className="carousel-dots">
-              {Array.from({ length: totalPages }).map((_, index) => (
-                <button
-                  key={index}
-                  className={`carousel-dot ${
-                    index === currentIndex ? "active" : ""
-                  }`}
-                  onClick={() => goToSlide(index)}
-                  aria-label={`Ir para slide ${index + 1}`}
-                />
-              ))}
-            </div>
-          </div>
+          </Swiper>
         </div>
       </div>
     </section>
