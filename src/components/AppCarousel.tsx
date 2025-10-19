@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCarousel } from "../hooks/useCarousel";
 
 interface CarouselItem {
@@ -106,14 +105,6 @@ export default function AppCarousel() {
       {/* Mobile Carousel */}
       <div className="mobile-carousel">
         <div className="carousel-container">
-          <button
-            className="carousel-nav prev"
-            onClick={goToPrevious}
-            aria-label="Slide anterior"
-          >
-            <ChevronLeft size={24} />
-          </button>
-
           <div className="carousel-content" key={`mobile-${currentIndex}`}>
             <div className="carousel-image">
               <Image
@@ -130,14 +121,6 @@ export default function AppCarousel() {
               <p className="carousel-description">{currentItem.description}</p>
             </div>
           </div>
-
-          <button
-            className="carousel-nav next"
-            onClick={goToNext}
-            aria-label="Próximo slide"
-          >
-            <ChevronRight size={24} />
-          </button>
         </div>
 
         {/* Dots indicator */}
@@ -156,14 +139,6 @@ export default function AppCarousel() {
       {/* Desktop Carousel */}
       <div className="desktop-carousel">
         <div className="carousel-container">
-          <button
-            className="carousel-nav prev"
-            onClick={goToPrevious}
-            aria-label="Slide anterior"
-          >
-            <ChevronLeft size={32} />
-          </button>
-
           <div className="carousel-content" key={`desktop-${currentIndex}`}>
             <div className="carousel-image">
               <Image
@@ -180,14 +155,6 @@ export default function AppCarousel() {
               <p className="carousel-description">{currentItem.description}</p>
             </div>
           </div>
-
-          <button
-            className="carousel-nav next"
-            onClick={goToNext}
-            aria-label="Próximo slide"
-          >
-            <ChevronRight size={32} />
-          </button>
         </div>
 
         {/* Dots indicator */}

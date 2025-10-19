@@ -9,8 +9,6 @@ import {
   Waves,
   Trophy,
   Target,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
 import { useModalitiesCarousel } from "@/hooks/useModalitiesCarousel";
 
@@ -98,14 +96,6 @@ export default function FitnessTypesSection() {
           {/* Carrossel para mobile */}
           <div className="modalities-carousel mobile-carousel">
             <div className="carousel-container">
-              <button
-                className="carousel-nav prev"
-                onClick={prevSlide}
-                aria-label="Modalidade anterior"
-              >
-                <ChevronLeft size={20} />
-              </button>
-
               <div className="carousel-content">
                 <div
                   className="carousel-track"
@@ -125,14 +115,6 @@ export default function FitnessTypesSection() {
                   })}
                 </div>
               </div>
-
-              <button
-                className="carousel-nav next"
-                onClick={nextSlide}
-                aria-label="Próxima modalidade"
-              >
-                <ChevronRight size={20} />
-              </button>
             </div>
 
             {/* Indicadores */}
