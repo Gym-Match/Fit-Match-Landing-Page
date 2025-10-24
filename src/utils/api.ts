@@ -1,7 +1,7 @@
 export interface CreateUserRequest {
   name: string;
   email: string;
-  invitation_code?: string;
+  indication_code?: string;
 }
 
 export interface CreateUserResponse {

@@ -58,7 +58,7 @@ export function usePreRegister(): UsePreRegisterReturn {
       const apiData: CreateUserRequest = {
         name: fullName,
         email: email,
-        invitation_code: invitationCode || undefined,
+        indication_code: invitationCode || undefined,
       };
 
       await createUser(apiData);

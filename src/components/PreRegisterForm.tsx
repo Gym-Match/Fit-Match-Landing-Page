@@ -18,10 +18,10 @@ export default function PreRegisterForm() {
     const formData = new FormData(e.currentTarget);
     const fullName = (formData.get("fullName") as string).trim();
     const email = (formData.get("email") as string).trim();
-    const invitationCode = (formData.get("invitation_code") as string)?.trim();
+    const indicationCode = (formData.get("indication_code") as string)?.trim();
 
     try {
-      await submitForm(fullName, email, invitationCode);
+      await submitForm(fullName, email, indicationCode);
       (e.target as HTMLFormElement).reset();
     } catch (error) {
       const errorMessage = (error as Error).message;
@@ -113,13 +113,13 @@ export default function PreRegisterForm() {
               className="input-group"
               style={{ display: refCode ? "none" : "flex" }}
             >
-              <label htmlFor="invitation_code">
+              <label htmlFor="indication_code">
                 Código de convite (opcional)
               </label>
               <input
                 type="text"
-                id="invitation_code"
-                name="invitation_code"
+                id="indication_code"
+                name="indication_code"
                 placeholder="Digite seu código de convite"
                 className={invitationCodeError ? "error" : ""}
                 style={{
@@ -143,7 +143,7 @@ export default function PreRegisterForm() {
 
             {/* Campo escondido para o código de referência da URL */}
             {refCode && (
-              <input type="hidden" name="invitation_code" value={refCode} />
+              <input type="hidden" name="indication_code" value={refCode} />
             )}
 
             <button
