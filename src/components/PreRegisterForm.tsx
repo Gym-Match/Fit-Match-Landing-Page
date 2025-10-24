@@ -109,10 +109,7 @@ export default function PreRegisterForm() {
               />
             </div>
 
-            <div
-              className="input-group"
-              style={{ display: refCode ? "none" : "flex" }}
-            >
+            <div className="input-group">
               <label htmlFor="indication_code">
                 Código de convite (opcional)
               </label>
@@ -121,6 +118,8 @@ export default function PreRegisterForm() {
                 id="indication_code"
                 name="indication_code"
                 placeholder="Digite seu código de convite"
+                value={refCode || ""}
+                readOnly={!!refCode}
                 className={invitationCodeError ? "error" : ""}
                 style={{
                   width: "100%",
@@ -139,12 +138,18 @@ export default function PreRegisterForm() {
                   Código de convite inválido
                 </span>
               )}
+              {refCode && (
+                <span
+                  style={{
+                    fontSize: "0.75rem",
+                    color: "var(--text-secondary)",
+                    marginTop: "0.25rem",
+                  }}
+                >
+                  Código de referência aplicado automaticamente
+                </span>
+              )}
             </div>
-
-            {/* Campo escondido para o código de referência da URL */}
-            {refCode && (
-              <input type="hidden" name="indication_code" value={refCode} />
-            )}
 
             <button
               type="submit"
