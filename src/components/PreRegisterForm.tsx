@@ -111,7 +111,7 @@ export default function PreRegisterForm() {
 
             <div
               className="input-group"
-              style={{ display: refCode ? "none" : "block" }}
+              style={{ display: refCode ? "none" : "flex" }}
             >
               <label htmlFor="invitation_code">
                 Código de convite (opcional)
@@ -122,6 +122,16 @@ export default function PreRegisterForm() {
                 name="invitation_code"
                 placeholder="Digite seu código de convite"
                 className={invitationCodeError ? "error" : ""}
+                style={{
+                  width: "100%",
+                  background: "var(--dark-bg)",
+                  border: "1px solid var(--border-color)",
+                  borderRadius: "12px",
+                  padding: "0.875rem 1rem",
+                  color: "var(--text-primary)",
+                  fontSize: "1rem",
+                  transition: "all 0.3s ease",
+                }}
                 onChange={() => setInvitationCodeError(false)} // Limpar erro ao digitar
               />
               {invitationCodeError && (
