@@ -4,53 +4,34 @@ import { Crown, Gift, CheckCircle, PartyPopper } from "lucide-react";
 import { toast } from "react-toastify";
 import { usePreRegister } from "../hooks/usePreRegister";
 import { useUrlParams } from "../hooks/useUrlParams";
-import { useState } from "react";
 
 export default function PreRegisterForm() {
   const { isLoading, showSuccess, submitForm } = usePreRegister();
   const { refCode } = useUrlParams();
-  const [invitationCodeError, setInvitationCodeError] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setInvitationCodeError(false); // Reset error state
 
     const formData = new FormData(e.currentTarget);
     const fullName = (formData.get("fullName") as string).trim();
     const email = (formData.get("email") as string).trim();
-    const indicationCode = (formData.get("indication_code") as string)?.trim();
 
     try {
-      await submitForm(fullName, email, indicationCode);
+      // Enviar o refCode automaticamente como indication_code
+      await submitForm(fullName, email, refCode || undefined);
       (e.target as HTMLFormElement).reset();
     } catch (error) {
       const errorMessage = (error as Error).message;
 
-      // Se o erro for relacionado ao código de convite, marcar o campo com erro visual
-      if (errorMessage.includes("Código de convite inválido")) {
-        setInvitationCodeError(true);
-        toast.error(
-          "Código de convite inválido! Verifique se digitou corretamente ou deixe em branco se não tiver um código.",
-          {
-            position: "top-right",
-            autoClose: 6000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          }
-        );
-      } else {
-        // Mostrar outros erros para o usuário
-        toast.error(errorMessage, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-      }
+      // Mostrar erros para o usuário
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
@@ -109,47 +90,29 @@ export default function PreRegisterForm() {
               />
             </div>
 
-            <div className="input-group">
-              <label htmlFor="indication_code">
-                Código de convite (opcional)
-              </label>
-              <input
-                type="text"
-                id="indication_code"
-                name="indication_code"
-                placeholder="Digite seu código de convite"
-                value={refCode || ""}
-                readOnly={!!refCode}
-                className={invitationCodeError ? "error" : ""}
+            {refCode && (
+              <div
+                className="referral-info"
                 style={{
-                  width: "100%",
-                  background: "var(--dark-bg)",
-                  border: "1px solid var(--border-color)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "12px 16px",
+                  background:
+                    "linear-gradient(135deg, rgba(46, 204, 113, 0.1) 0%, rgba(39, 174, 96, 0.1) 100%)",
+                  border: "1px solid rgba(46, 204, 113, 0.3)",
                   borderRadius: "12px",
-                  padding: "0.875rem 1rem",
-                  color: "var(--text-primary)",
-                  fontSize: "1rem",
-                  transition: "all 0.3s ease",
+                  marginBottom: "20px",
+                  fontSize: "14px",
+                  color: "var(--primary-green)",
                 }}
-                onChange={() => setInvitationCodeError(false)} // Limpar erro ao digitar
-              />
-              {invitationCodeError && (
-                <span className="error-message">
-                  Código de convite inválido
+              >
+                <Gift size={16} />
+                <span>
+                  Cadastro via convite • Código: <strong>{refCode}</strong>
                 </span>
-              )}
-              {refCode && (
-                <span
-                  style={{
-                    fontSize: "0.75rem",
-                    color: "var(--text-secondary)",
-                    marginTop: "0.25rem",
-                  }}
-                >
-                  Código de referência aplicado automaticamente
-                </span>
-              )}
-            </div>
+              </div>
+            )}
 
             <button
               type="submit"

@@ -25,7 +25,7 @@ export default function HeroSection() {
           <p className="hero-subtitle">
             Conecte-se com pessoas que compartilham sua paixão por uma vida
             saudável. Encontre alguém para treinar junto, alcançar metas e
-            construir um relacionamento forte e fitness! 💪❤️
+            construir um relacionamento forte e fitness!
           </p>
 
           <div className="hero-features">

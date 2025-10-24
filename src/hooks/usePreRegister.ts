@@ -72,9 +72,7 @@ export function usePreRegister(): UsePreRegisterReturn {
       console.error("Erro ao registrar usuário:", error);
 
       const apiError = error as ApiError;
-      console.log("API Error:", apiError);
 
-      // Verificar se é erro de email duplicado ANTES de qualquer outra verificação
       if (
         apiError.status === 400 &&
         apiError.message &&
