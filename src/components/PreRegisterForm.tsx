@@ -3,10 +3,12 @@
 import { Crown, Gift, CheckCircle, PartyPopper } from "lucide-react";
 import { toast } from "react-toastify";
 import { usePreRegister } from "../hooks/usePreRegister";
+import { useUrlParams } from "../hooks/useUrlParams";
 import { useState } from "react";
 
 export default function PreRegisterForm() {
   const { isLoading, showSuccess, submitForm } = usePreRegister();
+  const { refCode } = useUrlParams();
   const [invitationCodeError, setInvitationCodeError] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -107,7 +109,10 @@ export default function PreRegisterForm() {
               />
             </div>
 
-            <div className="input-group">
+            <div
+              className="input-group"
+              style={{ display: refCode ? "none" : "block" }}
+            >
               <label htmlFor="invitation_code">
                 Código de convite (opcional)
               </label>
@@ -125,6 +130,11 @@ export default function PreRegisterForm() {
                 </span>
               )}
             </div>
+
+            {/* Campo escondido para o código de referência da URL */}
+            {refCode && (
+              <input type="hidden" name="invitation_code" value={refCode} />
+            )}
 
             <button
               type="submit"
