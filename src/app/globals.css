@@ -1597,6 +1597,20 @@ a,
   .store-badge {
     width: 100%;
   }
+
+  /* Form Card Mobile Responsiveness */
+  .form-card {
+    max-width: 90vw;
+    padding: 20px;
+    margin: 10px;
+  }
+
+  /* Ajustar input de código de verificação no mobile */
+  .pre-register-form input[type="text"][id="verificationCode"] {
+    font-size: 18px !important;
+    letter-spacing: 4px !important;
+    padding: 12px !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1727,6 +1741,51 @@ a,
     width: 48px;
     height: 48px;
     color: var(--primary-green);
+  }
+
+  /* Form Card para telas muito pequenas */
+  .form-card {
+    max-width: 95vw;
+    padding: 15px;
+    margin: 5px;
+  }
+
+  /* Input de código ainda menor para telas muito pequenas */
+  .pre-register-form input[type="text"][id="verificationCode"] {
+    font-size: 16px !important;
+    letter-spacing: 2px !important;
+    padding: 10px !important;
+  }
+
+  /* Ajustar botão do formulário em telas pequenas */
+  .submit-btn {
+    font-size: 14px;
+    padding: 12px 20px;
+  }
+}
+
+/* Telas muito pequenas (iPhone SE, etc.) */
+@media (max-width: 360px) {
+  .form-card {
+    max-width: 98vw;
+    padding: 12px;
+    margin: 2px;
+  }
+
+  .pre-register-form input[type="text"][id="verificationCode"] {
+    font-size: 14px !important;
+    letter-spacing: 1px !important;
+    padding: 8px !important;
+  }
+
+  .submit-btn {
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+
+  /* Reduzir espaçamento interno do formulário */
+  .input-group {
+    margin-bottom: 15px;
   }
 }
 
