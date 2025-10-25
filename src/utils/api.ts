@@ -36,8 +36,6 @@ export interface ApiError {
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
-console.log("🔗 API URL configurada:", API_BASE_URL);
-
 export async function sendVerificationCode(
   userData: SendVerificationRequest
 ): Promise<SendVerificationResponse> {

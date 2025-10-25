@@ -79,42 +79,33 @@ export function usePreRegister(): UsePreRegisterReturn {
         (apiError.message === "Email já está em uso" ||
           apiError.message.toLowerCase().includes("email"))
       ) {
-        toast.info(
-          "Este e-mail já fez o pré-cadastro e já garantiu o primeiro mês de premium! 🎉",
-          {
+        toast.info("Este e-mail já está em uso.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      if (apiError.status === 400) {
+        if (
+          apiError.message.toLowerCase().includes("email") ||
+          apiError.message === "Email já está em uso"
+        ) {
+          toast.info("Este e-mail já está em uso.", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
-          }
-        );
-        setIsLoading(false);
-        return; // Não lançar erro, apenas mostrar o toast
-      }
-
-      // Para todos os outros erros, lançar exceção
-      if (apiError.status === 400) {
-        if (
-          apiError.message.toLowerCase().includes("email") ||
-          apiError.message === "Email já está em uso"
-        ) {
-          toast.info(
-            "Este e-mail já fez o pré-cadastro e já garantiu o um mês premium grátis! 🎉",
-            {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-            }
-          );
-          return; // Não lançar erro, apenas mostrar o toast
+          });
+          return;
         } else {
-          // Para códigos de convite inválidos e outros erros 400, lançar o erro
-          // para ser tratado pelo componente
           throw new Error(
             apiError.message || "Dados inválidos. Verifique as informações."
           );

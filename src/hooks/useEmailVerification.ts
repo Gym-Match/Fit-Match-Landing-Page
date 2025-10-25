@@ -123,17 +123,14 @@ export function useEmailVerification(): UseEmailVerificationReturn {
         (apiError.message === "Email já está em uso" ||
           apiError.message.toLowerCase().includes("email"))
       ) {
-        toast.info(
-          "Este e-mail já fez o pré-cadastro e já garantiu o primeiro mês de premium! 🎉",
-          {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          }
-        );
+        toast.info("Este e-mail já está em uso.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
         return;
       }
 
