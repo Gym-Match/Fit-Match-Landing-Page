@@ -1,37 +1,33 @@
-"use client";
-
-import Header from "@/components/Header";
-import HeroSection from "@/components/HeroSection";
-import FeaturesSection from "@/components/FeaturesSection";
-import InviteCodeSection from "@/components/InviteCodeSection";
-import HowItWorksSection from "@/components/HowItWorksSection";
-import FitnessTypesSection from "@/components/FitnessTypesSection";
-import ExclusiveBenefitsSection from "@/components/ExclusiveBenefitsSection";
+import AppGallery from "@/components/AppGallery";
+import Backdrop from "@/components/Backdrop";
+import Faq from "@/components/Faq";
+import Features from "@/components/Features";
+import FitCoins from "@/components/FitCoins";
 import Footer from "@/components/Footer";
-import BackgroundDecoration from "@/components/BackgroundDecoration";
-import { usePageAnimations } from "@/hooks/useAnimations";
+import Hero from "@/components/Hero";
+import HowItWorks from "@/components/HowItWorks";
+import Nav from "@/components/Nav";
+import PreRegister from "@/components/PreRegister";
+import TrustStrip from "@/components/TrustStrip";
 
 export default function Home() {
-  // Usar as animações
-  usePageAnimations();
-
   return (
-    <div>
-      <div className="container">
-        <Header />
+    <>
+      <Backdrop />
+      <Nav />
 
-        <main className="main-content">
-          <HeroSection />
-          <FeaturesSection />
-          <HowItWorksSection />
-          <FitnessTypesSection />
-          <ExclusiveBenefitsSection />
-          <InviteCodeSection />
-        </main>
+      <main>
+        <Hero />
+        <TrustStrip />
+        <AppGallery />
+        <Features />
+        <HowItWorks />
+        <FitCoins />
+        <PreRegister />
+        <Faq />
+      </main>
 
-        <BackgroundDecoration />
-      </div>
       <Footer />
-    </div>
+    </>
   );
 }

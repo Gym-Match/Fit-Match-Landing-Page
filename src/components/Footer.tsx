@@ -1,60 +1,92 @@
-import { Heart, Mail, Instagram, Music, Briefcase } from "lucide-react";
+import Image from "next/image";
+import { Mail } from "lucide-react";
+
+const AppleIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+    <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+  </svg>
+);
+
+const PlayIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+    <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z" />
+  </svg>
+);
 
 export default function Footer() {
   return (
     <footer className="footer">
-      <div className="footer-content">
-        <div className="footer-main">
-          <div className="footer-brand">
-            <h3 className="footer-logo">
-              <Heart className="logo-icon" size={24} />
-              Fit Match
-            </h3>
-            <p className="footer-tagline">
-              O primeiro app de relacionamentos 100% focado em fitness.
-              Conecte-se com pessoas que compartilham sua paixão por uma vida
-              saudável.
+      <div className="shell">
+        <div className="footer__grid">
+          <div>
+            <span className="brand">
+              <span className="brand__mark">
+                {/* eager: o lazy padrão do next/image deixava a marca como uma
+                    caixa vazia até carregar, e são só ~2KB. */}
+                <Image
+                  src="/assets/logo.png"
+                  alt=""
+                  width={34}
+                  height={34}
+                  loading="eager"
+                />
+              </span>
+              <span>
+                Fit <span className="grad">Match</span>
+              </span>
+            </span>
+            <p className="footer__tagline">
+              O app de relacionamentos de quem vive o estilo de vida fitness.
+              Deslize, dê match e conheça alguém que fala a sua língua.
             </p>
           </div>
 
-          <div className="footer-contact">
-            <h4>Entre em Contato</h4>
-            <div className="contact-item">
-              <Mail className="contact-icon" size={20} />
-              <a href="mailto:contato@fitmatchbr.com">contato@fitmatchbr.com</a>
+          <div>
+            <h4>Navegue</h4>
+            <div className="footer__list">
+              <a href="#app">O app</a>
+              <a href="#recursos">Recursos</a>
+              <a href="#como-funciona">Como funciona</a>
+              <a href="#fitcoins">FitCoins</a>
+              <a href="#pre-cadastro">Pré-cadastro</a>
             </div>
           </div>
 
-          {/* TODO: Ativar redes sociais quando estiverem prontas
-          <div className="footer-social">
-            <h4>Redes Sociais</h4>
-            <div className="social-links">
-              <a href="#" className="social-link" aria-label="Instagram">
-                <Instagram size={20} />
-                Instagram
-              </a>
-              <a href="#" className="social-link" aria-label="TikTok">
-                <Music size={20} />
-                TikTok
-              </a>
-              <a href="#" className="social-link" aria-label="LinkedIn">
-                <Briefcase size={20} />
-                LinkedIn
+          <div>
+            <h4>Em breve nas lojas</h4>
+            <div className="stores">
+              <span className="store">
+                <AppleIcon />
+                <span>
+                  <small>Em breve na</small>
+                  <strong>App Store</strong>
+                </span>
+              </span>
+              <span className="store">
+                <PlayIcon />
+                <span>
+                  <small>Em breve no</small>
+                  <strong>Google Play</strong>
+                </span>
+              </span>
+            </div>
+
+            <h4 style={{ marginTop: 32 }}>Contato</h4>
+            <div className="footer__list">
+              <a href="mailto:contato@fitmatchbr.com">
+                <Mail size={18} />
+                contato@fitmatchbr.com
               </a>
             </div>
           </div>
-          */}
         </div>
 
-        <div className="footer-bottom">
-          <div className="footer-legal">
-            <p>&copy; 2025 Fit Match. Todos os direitos reservados.</p>
-            <div className="legal-links">
-              <a href="#privacy">Política de Privacidade</a>
-              <span>•</span>
-              <a href="#terms">Termos de Uso</a>
-            </div>
-          </div>
+        <div className="footer__bottom">
+          <p>&copy; {new Date().getFullYear()} Fit Match. Todos os direitos reservados.</p>
+          <nav>
+            <a href="#privacidade">Política de Privacidade</a>
+            <a href="#termos">Termos de Uso</a>
+          </nav>
         </div>
       </div>
     </footer>
