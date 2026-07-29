@@ -69,6 +69,11 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  /* Sem `cover`, celulares com entalhe confinam a página à área segura e as
+     bordas aparecem como faixas pretas. Com `cover` o fundo vai até o vidro —
+     e o CSS usa env(safe-area-inset-*) para o conteúdo não ficar embaixo do
+     entalhe nem do indicador de home. */
+  viewportFit: "cover",
   themeColor: "#000000",
 };
 
